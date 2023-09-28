@@ -2,18 +2,18 @@ const { Schema, model } = require('mongoose');
 
 const userSchema = new Schema(
     {
-        username: String,
-        unique: true,
-        required: true,
-        trimmed: true
-    },
-    {
-        email: String,
-        required: true,
-        unique: true,
-        match: /.+\@.+\..+/,
-    },
-    {
+        username: {
+            type: String,
+            unique: true,
+            required: true,
+            trim: true   // Note the correct attribute is 'trim'
+        },
+        email: {
+            type: String,
+            required: true,
+            unique: true,
+            match: /.+\@.+\..+/,
+        },
         thoughts: [
             {
                 type: Schema.Types.ObjectId,
@@ -35,3 +35,10 @@ const userSchema = new Schema(
         id: false
     }
 );
+
+// Add the friendCount virtual
+userSchema.virtual('friendCount').get(function() {
+    return this.friends.length;
+});
+
+module.exports = model('User', userSchema);
