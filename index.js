@@ -4,14 +4,6 @@ const routes = require('./routes');
 const db = require('./config/connection');
 const app = express();
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/social-network', {
-    useFindAndModify: false,
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
-
-
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(routes);
